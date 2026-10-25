@@ -1,0 +1,68 @@
+[
+  {
+    "number": 1,
+    "title": "Neolith",
+    "filename": "01-neolith.mp3",
+    "bpm": "145",
+    "duration": "00:02:47",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100140",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Neolith.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 2,
+    "title": "Harmful or Fatal",
+    "filename": "02-harmful-or-fatal.mp3",
+    "bpm": "135",
+    "duration": "00:05:31",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100210",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Harmful%20or%20Fatal.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 3,
+    "title": "In a Heartbeat",
+    "filename": "03-in-a-heartbeat.mp3",
+    "bpm": "130",
+    "duration": "00:03:38",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100197",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/In%20a%20Heartbeat.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 4,
+    "title": "Ropocolypse 2",
+    "filename": "04-ropocolypse-2.mp3",
+    "bpm": "139",
+    "duration": "00:01:47",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100810",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Ropocalypse%202.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 5,
+    "title": "Club Diver",
+    "filename": "05-club-diver.mp3",
+    "bpm": "140",
+    "duration": "00:02:26",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200020",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Club%20Diver.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 6,
+    "title": "Split In Synapse",
+    "filename": "06-split-in-synapse.mp3",
+    "bpm": "170",
+    "duration": "00:00:38",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100703",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Split%20In%20Synapse.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  }
+]

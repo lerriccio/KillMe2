@@ -1,0 +1,10 @@
+# Local test captures and recovery copies
+tests/*.png
+tests/*.bak
+tests/recovery-base.txt
+node_modules/
+desktop.ini
+Thumbs.db
+.env
+.env.*
+!.env.example

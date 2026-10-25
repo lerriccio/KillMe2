@@ -1,0 +1,112 @@
+[
+  {
+    "number": 1,
+    "title": "Volatile Reaction",
+    "filename": "01-volatile-reaction.mp3",
+    "bpm": "155",
+    "duration": "00:02:45",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400039",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Volatile%20Reaction.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 2,
+    "title": "Five Armies",
+    "filename": "02-five-armies.mp3",
+    "bpm": "238",
+    "duration": "00:02:36",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100875",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Five%20Armies.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 3,
+    "title": "Black Vortex",
+    "filename": "03-black-vortex.mp3",
+    "bpm": "163",
+    "duration": "00:02:50",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300037",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Black%20Vortex.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 4,
+    "title": "Curse of the Scarab",
+    "filename": "04-curse-of-the-scarab.mp3",
+    "bpm": "190",
+    "duration": "00:05:27",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600014",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Curse%20of%20the%20Scarab.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 5,
+    "title": "Clenched Teeth",
+    "filename": "05-clenched-teeth.mp3",
+    "bpm": "164",
+    "duration": "00:01:31",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100705",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Clenched%20Teeth.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 6,
+    "title": "Mechanolith",
+    "filename": "06-mechanolith.mp3",
+    "bpm": "141",
+    "duration": "00:00:55",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100879",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Mechanolith.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 7,
+    "title": "Future Gladiator",
+    "filename": "07-future-gladiator.mp3",
+    "bpm": "132",
+    "duration": "00:03:37",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200051",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Future%20Gladiator.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 8,
+    "title": "Metalmania",
+    "filename": "08-metalmania.mp3",
+    "bpm": "150",
+    "duration": "00:03:10",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700023",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Metalmania.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 9,
+    "title": "Summon the Rawk",
+    "filename": "09-summon-the-rawk.mp3",
+    "bpm": "209",
+    "duration": "00:03:28",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200050",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Summon%20the%20Rawk.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  },
+  {
+    "number": 10,
+    "title": "Ready Aim Fire",
+    "filename": "10-ready-aim-fire.mp3",
+    "bpm": "172",
+    "duration": "00:03:37",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1500002",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Ready%20Aim%20Fire.mp3",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0"
+  }
+]

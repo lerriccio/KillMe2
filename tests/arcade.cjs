@@ -1,0 +1,18 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const http=require('node:http');
+const assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const root=path.resolve(__dirname,'..');
+const source=fs.readFileSync(path.join(root,'game.js'),'utf8').replace('requestAnimationFrame(frame);\n})();',`globalThis.arcadeQA={
+ scene(i){arena=i;palette=palettes[i];wave=(i+1)*4;enemies=[];enemyBullets=[];bossSpawned=true;player.inv=0;spawn('boss');const boss=enemies[0];boss.x=W*.65;boss.y=H*.48;boss.cd=99;boss.hp=boss.maxHp*.45;$('arenaName').textContent=palette.name+' / '+player.hero.name;announce(bossNames[i]);for(const [j,type] of ['normal','tank','shooter','runner'].entries()){spawn(type);enemies.at(-1).x=W*.25+j*95;enemies.at(-1).y=H*.65;}draw();return boss;},
+ attack(){enemyBullets=[];bossAttack(enemies[0],0);return enemyBullets.map(b=>({vx:b.vx,vy:b.vy,r:b.r}));},
+ samples:sampleDefs,play:sfx,pools:samplePools,draw
+};requestAnimationFrame(frame);\n})();`);
+const server=http.createServer((req,res)=>{const url=new URL(req.url,'http://localhost');const file=path.resolve(root,'.'+decodeURIComponent(url.pathname==='/'?'/index.html':url.pathname));if(!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}if(!fs.existsSync(file)){res.writeHead(404).end();return;}res.setHeader('Content-Type',file.endsWith('.js')?'application/javascript':file.endsWith('.css')?'text/css':file.endsWith('.ogg')?'audio/ogg':file.endsWith('.html')?'text/html':'application/octet-stream');res.end(file===path.join(root,'game.js')?source:fs.readFileSync(file));});
+(async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({channel:'msedge',headless:true});try{const page=await browser.newPage({viewport:{width:1440,height:900}});const errors=[];page.on('pageerror',e=>errors.push(String(e)));await page.goto('http://127.0.0.1:'+server.address().port);await page.locator('#startButton').click();
+ for(let i=0;i<3;i++){await page.evaluate(i=>arcadeQA.scene(i),i);const projectiles=await page.evaluate(()=>arcadeQA.attack());assert.equal(projectiles.length,[7,18,23][i]);assert.ok(projectiles.every(p=>Number.isFinite(p.vx)&&p.r>0));await page.screenshot({path:path.join(__dirname,'arena-'+i+'.png')});}
+ await page.locator('#pauseButton').click();
+ const durations=await page.evaluate(async()=>{const results={};for(const [type,[file]] of Object.entries(arcadeQA.samples)){const a=new Audio('assets/audio/kenney/Audio/'+file+'.ogg');await new Promise((resolve,reject)=>{a.onloadedmetadata=resolve;a.onerror=()=>reject(Error(file));a.load();});results[type]=a.duration;}return results;});assert.equal(Object.keys(durations).length,10);assert.ok(Object.values(durations).every(d=>d>0));
+ await page.evaluate(()=>arcadeQA.play('nova'));await page.waitForTimeout(180);assert.ok(await page.evaluate(()=>arcadeQA.pools.nova.some(a=>a.currentTime>0&&!a.paused)),'recorded SFX actually plays');await page.locator('#muteButton').click();assert.ok(await page.evaluate(()=>Object.values(arcadeQA.pools).flat().every(a=>a.muted)),'mute applies to all samples');await page.locator('#homeButton').click();assert.ok(await page.evaluate(()=>Object.values(arcadeQA.pools).flat().every(a=>a.paused&&a.currentTime===0)),'home stops all effects');assert.deepEqual(errors,[]);console.log('PASS: three illustrated arenas, distinct furious boss patterns, 10 downloaded OGG effects decoded, recorded playback, mute and audio cleanup; no browser errors.');
+ }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>server.close());
