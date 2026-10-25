@@ -39,11 +39,11 @@ for(const [tier,count] of Object.entries(counts))assert.ok(Math.abs(count/60000-
 console.log('Rarity distribution (60,000 cards):',counts);
 sandbox.Math.random=()=>0;
 t.xp();t.update(1/60);
-assert.match(element('choices').children[0].innerHTML,/NUOVA ABILITÀ · GRADO 1/);
-element('choices').children[0].onclick();assert.equal(t.state().player.ranks.core,1);
+assert.match(element('upgradeChoices').children[0].innerHTML,/NUOVA ABILITÀ · GRADO 1/);
+element('upgradeChoices').children[0].onclick();assert.equal(t.state().player.ranks.core,1);
 t.xp();t.update(1/60);
-assert.match(element('choices').children[0].innerHTML,/GRADO 1 → 2/);
-const oldDamage=t.state().player.damage;element('choices').children[0].onclick();
+assert.match(element('upgradeChoices').children[0].innerHTML,/GRADO 1 → 2/);
+const oldDamage=t.state().player.damage;element('upgradeChoices').children[0].onclick();
 assert.equal(t.state().player.ranks.core,2);assert.ok(Math.abs(t.state().player.damage-oldDamage*1.08)<1e-8);
 t.newRun();assert.equal(Object.keys(t.state().player.ranks).length,0);
 const ability=id=>t.upgrades.find(u=>u.id===id);
