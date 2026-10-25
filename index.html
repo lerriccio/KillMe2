@@ -2,40 +2,71 @@
 <html lang="it">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>WILD BUNCH</title><link id="gameStyle" rel="stylesheet" href="style.css">
+  <title>KillMe2</title><link id="gameStyle" rel="stylesheet" href="style.css">
   <script>document.getElementById('gameStyle').href='style.css?v='+Date.now();</script>
 </head>
 <body>
-  <canvas id="game" aria-label="Arena di Wild Bunch"></canvas>
+  <canvas id="game" aria-label="Arena di KillMe2"></canvas>
   <canvas id="gameText" aria-hidden="true"></canvas>
   <div id="vignette"></div>
   <div id="displayNotice" role="status" hidden></div>
-  <header><a class="wordmark" href="." aria-label="Wild Bunch, torna al menu">WB<span> / WILD BUNCH</span></a><div class="top-right" role="group" aria-label="Comandi di gioco"><span id="status">8-BIT ARCADE / HI-SCORE</span><button id="fullscreenButton" type="button" title="Schermo intero (F)" aria-label="Attiva schermo intero" aria-pressed="false"><span class="control-icon fullscreen-icon" aria-hidden="true"></span><span id="fullscreenLabel">SCHERMO INTERO</span></button><button id="pauseButton" type="button" title="Pausa (Esc)" aria-label="Metti in pausa" hidden><span class="control-icon pause-icon" aria-hidden="true"></span><span id="pauseLabel">PAUSA</span></button><button id="muteButton" type="button" title="Disattiva audio (M)" aria-label="Disattiva audio" aria-pressed="true"><span class="control-icon audio-icon" aria-hidden="true"></span><span id="audioLabel">AUDIO ON</span></button></div></header>
+  <header><div class="top-right" role="group" aria-label="Comandi di gioco"><button id="pauseButton" type="button" title="Pausa (Esc)" aria-label="Metti in pausa" hidden><span class="control-icon pause-icon" aria-hidden="true"></span><span id="pauseLabel">PAUSA</span></button><button id="quickSettingsButton" type="button" aria-haspopup="dialog" aria-controls="settingsDialog" hidden>IMPOSTAZIONI</button></div></header>
   <section id="menu" class="screen">
-    <div class="eyebrow"><i></i> PIXEL POWER / ARCADE SURVIVAL</div>
-    <h1>WILD<br><span>BUNCH</span><b>★</b></h1>
-    <p class="intro">Caccia le élite. Afferra il bottino. Scatena la Furia.<br>Quattro eroi, dodici ondate e un record da polverizzare.</p>
-    <div class="roster-label">SCEGLI IL TUO EROE <span>4 COMBATTENTI · 4 SUPER ARMI</span></div><div id="roster" role="group" aria-label="Scegli un personaggio"></div><p id="heroDetails" aria-live="polite"></p>
-    <div class="config"><label>01 / DESTINAZIONE<select id="arenaSelect"><option value="0">Canyon dei predoni</option><option value="1">Bosco dei funghi</option><option value="2">Forgia abbandonata</option></select></label></div>
-    <div class="menu-actions"><button id="startButton" class="primary">ENTRA NELL’ARENA <span aria-hidden="true">↗</span></button>
-    <button id="creditsButton" class="secondary credits-button" aria-haspopup="dialog" aria-controls="creditsDialog">RICONOSCIMENTI</button></div>
-    <div class="controls"><span><kbd>WASD / ↑↓←→</kbd> movimento</span><span><kbd>SPAZIO</kbd> scatto / para colpi</span><span><kbd>E</kbd> super</span><span><kbd>ESC</kbd> pausa</span><span><kbd>F</kbd> schermo intero</span><span><kbd>M</kbd> audio</span><span>tiro automatico</span></div>
-    <p class="touch-help">TOUCH: joystick a sinistra · Scatto e Super a destra.<br>Per una visuale più ampia, ruota il telefono.</p>
-    <p class="music-credit" style="font-size:11px;opacity:.65">Mega Hyper Ultrastorm · Blown Away · Furious Freak · Club Diver — Kevin MacLeod (incompetech.com) · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:inherit">CC BY 4.0</a></p><div class="best">RECORD LOCALE <strong id="best">000000</strong><span>12 ONDATE / 3 BOSS / NESSUNA SECONDA POSSIBILITÀ</span></div>
+    <div class="menu-heading"><div class="eyebrow">QUATTRO EROI. UNA SOLA ARENA.</div><h1>KILL<span>ME2</span><b>★</b></h1><p>Scegli il tuo eroe. Lascia il segno.</p></div>
+    <div class="roster-label"><span class="step-number">01</span> SCEGLI IL TUO EROE</div><div id="roster" role="group" aria-label="Scegli un personaggio"></div>
+    <div class="roster-label mode-label"><span class="step-number">02</span> SCEGLI COME GIOCARE</div>
+    <div class="config"><label>ARENA<select id="arenaSelect"><option value="0">Canyon dei predoni</option><option value="1">Bosco dei funghi</option><option value="2">Forgia abbandonata</option></select></label></div>
+    <div class="menu-actions"><button id="campaignButton" class="primary"><span class="mode-icon" aria-hidden="true">01</span><span class="mode-copy"><strong>CAMPAGNA</strong><small>Il cuore della Forgia</small></span><span class="mode-arrow" aria-hidden="true">→</span></button><button id="startButton" class="secondary"><span class="mode-icon" aria-hidden="true">∞</span><span class="mode-copy"><strong>ARCADE</strong><small>Resisti. Combatti. Supera il record.</small></span><span class="mode-arrow" aria-hidden="true">→</span></button></div>
+    <div class="controls"><span><kbd>WASD / ↑↓←→</kbd> movimento</span><span><kbd>SPAZIO</kbd> scatto</span><span><kbd>E</kbd> super</span></div>
+    <div class="menu-footer"><div class="best">RECORD ARCADE <strong id="best">000000</strong></div><button id="settingsButton" class="secondary" aria-haspopup="dialog" aria-controls="settingsDialog"><span aria-hidden="true">⚙</span> IMPOSTAZIONI</button></div>
+  </section>
+  <section id="campaignMap" class="campaign-screen" hidden aria-labelledby="campaignTitle">
+    <div class="eyebrow">IL CUORE DELLA FORGIA / CAPITOLO 01</div>
+    <h2 id="campaignTitle">IL SEGNALE NELLA POLVERE</h2>
+    <p class="campaign-intro">Quattro sconosciuti. Un segnale impossibile. Una strada verso la Forgia.</p>
+    <div id="campaignHeroes" role="group" aria-label="Scegli l’eroe per la missione"></div>
+    <div class="canyon-route"><div class="route-sun" aria-hidden="true"></div><div id="missionNodes"></div></div>
+    <p id="campaignProgress" role="status"></p>
+    <div class="campaign-actions"><button id="replayIntro" class="secondary">RILEGGI IL PROLOGO</button><button id="replayEnding" class="secondary" hidden>RILEGGI IL FINALE</button><button id="mapHome" class="secondary">TORNA AL MENU</button></div>
+  </section>
+  <section id="comicScreen" class="campaign-screen comic-screen" hidden aria-labelledby="comicTitle">
+    <div class="eyebrow" id="comicCounter"></div><h2 id="comicTitle"></h2>
+    <div class="comic-page">
+      <div class="comic-picture"><canvas id="comicArt" width="384" height="256" role="img" aria-label=""></canvas><p id="comicLoadStatus" role="status" hidden>CARICAMENTO VIGNETTA…</p></div>
+      <div class="comic-caption" aria-live="polite"><strong id="comicSpeaker"></strong><p id="comicText"></p></div>
+    </div>
+    <div class="campaign-actions"><button id="comicPrevious" class="secondary">INDIETRO</button><button id="comicNext" class="primary">AVANTI</button><button id="comicSkip" class="secondary">SALTA FUMETTO</button></div>
   </section>
   <section id="hud" hidden>
     <div class="hud-left"><div class="eyebrow" id="arenaName"></div><div class="health-label">INTEGRITÀ <strong id="healthText"></strong></div><div class="bar health"><i id="healthBar"></i></div><div class="health-label">LIVELLO <strong id="levelText">1</strong></div><div class="bar xp"><i id="xpBar"></i></div></div>
     <div class="wave-panel"><div id="waveText">ONDATA 01</div><strong id="timer">00:30</strong><small id="enemyCount"></small></div>
-    <div class="score-panel"><small>PUNTEGGIO</small><strong id="score">000000</strong><div id="combo"></div><div class="combo-track"><i id="comboFill"></i></div><div id="furyMeter"><span id="furyText">FURIA 0%</span><div class="fury-track"><i id="furyFill"></i></div><small id="furyHint">ELIMINA PER CARICARE</small></div></div>
-    <div class="event-panel"><strong id="eventName"></strong><span id="eventHint"></span></div>
-    <div class="abilities"><button id="dashButton" type="button"><kbd>SPAZIO</kbd><span>SCATTO</span><strong id="dashText">PRONTO</strong></button><button id="novaButton" type="button"><kbd>E</kbd><span>SUPER COLPO</span><strong id="novaText">PRONTO</strong></button></div>
+    <div class="score-panel"><small>PUNTEGGIO</small><strong id="score">000000</strong><div id="combo"></div><div class="combo-track"><i id="comboFill"></i></div><div id="furyMeter"><span id="furyText">FURIA 0%</span><div class="fury-track"><i id="furyFill"></i></div></div></div>
+    <div class="event-panel"><strong id="eventName"></strong></div>
+    <div id="missionObjective" role="status" hidden></div>
+    <div class="abilities"><button id="dashButton" type="button"><i class="ability-icon dash-icon" aria-hidden="true"></i><kbd>SPAZIO</kbd><span>SCATTO</span><strong id="dashText">PRONTO</strong></button><button id="novaButton" type="button"><i class="ability-icon nova-icon" aria-hidden="true"></i><kbd>E</kbd><span>SUPER COLPO</span><strong id="novaText">PRONTO</strong></button></div>
     <div id="bossHud" hidden><div class="boss-panel"><div id="bossName"></div><div class="boss-health"><i id="bossHealth"></i></div></div></div>
     <div id="joystick" role="group" aria-label="Joystick touch: trascina per muoverti"><span id="joystickKnob"></span></div>
-    <div id="announcement"></div><div class="bottom-note">WASD / FRECCE · MUOVITI &nbsp; | &nbsp; ESC · PAUSA</div>
+    <div id="announcement"></div>
   </section>
-  <section id="overlay" class="modal-wrap" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="eyebrow" id="modalEyebrow"></div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div id="choices"></div><div id="rarityLegend" class="rarity-legend"></div><button id="continueButton" class="primary" hidden>CONTINUA ↗</button><button id="homeButton" class="secondary">TORNA AL MENU</button></div></section>
+  <section id="overlay" class="modal-wrap" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="eyebrow" id="modalEyebrow"></div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div id="choices"></div><button id="continueButton" class="primary" hidden>CONTINUA ↗</button><button id="homeButton" class="secondary">TORNA AL MENU</button></div></section>
+  <dialog id="settingsDialog" aria-labelledby="settingsTitle">
+    <div class="settings-heading"><div><div class="eyebrow">LA TUA ESPERIENZA</div><h2 id="settingsTitle">IMPOSTAZIONI</h2></div><button id="closeSettingsButton" class="secondary" aria-label="Chiudi impostazioni" autofocus>CHIUDI ×</button></div>
+    <section class="settings-section"><h3>AUDIO</h3>
+      <label class="setting-row" for="musicVolume"><span>Musica <output id="musicVolumeValue" for="musicVolume">70%</output></span><input id="musicVolume" type="range" min="0" max="100" value="70"></label>
+      <label class="setting-row" for="sfxVolume"><span>Effetti sonori <output id="sfxVolumeValue" for="sfxVolume">80%</output></span><input id="sfxVolume" type="range" min="0" max="100" value="80"></label>
+      <button id="muteButton" type="button" class="secondary" title="Disattiva audio (M)" aria-label="Disattiva audio" aria-pressed="true"><span class="control-icon audio-icon" aria-hidden="true"></span><span id="audioLabel">AUDIO ON</span></button>
+    </section>
+    <section class="settings-section"><h3>GRAFICA E SCHERMO</h3>
+      <label class="setting-row" for="graphicsQuality"><span>Effetti e particelle</span><select id="graphicsQuality"><option value="high">Alti</option><option value="low">Ridotti · più prestazioni</option></select></label>
+      <label class="setting-check"><input id="screenShake" type="checkbox" checked><span>Vibrazione dello schermo</span></label>
+      <label class="setting-check"><input id="scanlines" type="checkbox" checked><span>Filtro retro a righe</span></label>
+      <button id="fullscreenButton" type="button" class="secondary" title="Schermo intero (F)" aria-label="Attiva schermo intero" aria-pressed="false"><span class="control-icon fullscreen-icon" aria-hidden="true"></span><span id="fullscreenLabel">SCHERMO INTERO</span></button>
+    </section>
+    <section class="settings-section"><h3>COMANDI</h3><p>WASD / frecce: movimento · Spazio: scatto · E: super<br>Esc: pausa · M: audio · F: schermo intero<br>Su touch: trascina a sinistra per muoverti e usa i tasti abilità.</p></section>
+    <div class="settings-footer"><p>Le preferenze vengono salvate su questo browser.</p><button id="creditsButton" class="secondary" aria-haspopup="dialog" aria-controls="creditsDialog">RICONOSCIMENTI →</button></div>
+  </dialog>
   <dialog id="creditsDialog" aria-labelledby="creditsTitle">
-    <div class="credits-heading"><div><div class="eyebrow">WILD BUNCH / I CREDITI</div><h2 id="creditsTitle">RICONOSCIMENTI</h2></div><button id="closeCreditsButton" class="secondary" aria-label="Chiudi i riconoscimenti" autofocus>CHIUDI ×</button></div>
+    <div class="credits-heading"><div><div class="eyebrow">KillMe2 / I CREDITI</div><h2 id="creditsTitle">RICONOSCIMENTI</h2></div><button id="closeCreditsButton" class="secondary" aria-label="Chiudi i riconoscimenti" autofocus>CHIUDI ×</button></div>
     <section class="creator-credit"><span>IDEAZIONE E CREAZIONE</span><p>Lerriccio</p><small>Assistenza allo sviluppo: Codex, assistente AI di OpenAI.</small></section>
     <section><h3>Musiche</h3><p>Composizioni e registrazioni di <a href="https://incompetech.com/" target="_blank" rel="noopener">Kevin MacLeod (incompetech.com)</a>.</p>
       <ul class="music-titles">
@@ -47,8 +78,8 @@
       <p>Licensed under Creative Commons: By Attribution 4.0 License — <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.</p><p>Brani utilizzati senza modifiche alle registrazioni; la riproduzione regola il volume e gestisce ripetizioni e pause.</p>
     </section>
     <section><h3>Effetti sonori</h3><p><a href="https://kenney.nl/assets/sci-fi-sounds" target="_blank" rel="noopener">Sci-fi Sounds — Kenney</a> (2020), <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener">CC0 1.0</a>.</p><p>Laser, impatti, scatti, esplosioni e segnali di gioco. Riproduzione con regolazione del volume e leggere variazioni di intonazione.</p></section>
-    <section><h3>Grafica e caratteri</h3><p>Grafica e animazioni pixel art disegnate nel codice del gioco. Font locale Arcade Pixel, generato per il progetto e distribuito in CC0.</p></section>
-    <p class="credits-thanks">Grazie a chi gioca a WILD BUNCH.</p>
+    <section><h3>Grafica e caratteri</h3><p>Grafica e animazioni pixel art disegnate nel codice del gioco. Vignette originali della campagna create con assistenza di ImageGen. Font locale Arcade Pixel, generato per il progetto e distribuito in CC0.</p></section>
+    <p class="credits-thanks">Grazie a chi gioca a KillMe2.</p>
   </dialog>
   <script>const gameScript=document.createElement('script');gameScript.src='game.js?v='+Date.now();document.body.appendChild(gameScript);</script>
 </body></html>

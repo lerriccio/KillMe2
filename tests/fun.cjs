@@ -5,10 +5,10 @@ const elements = new Map();
 const noop = () => {};
 const context = new Proxy({}, {get: (_,key) => ['createRadialGradient','createLinearGradient'].includes(key) ? () => ({addColorStop:noop}) : noop, set: () => true});
 function element(id) {
-  if (!elements.has(id)) elements.set(id, {value:'0',hidden:false,classList:{add:noop,remove:noop},style:{setProperty:noop},children:[],textContent:'',getContext:()=>context,setAttribute(k,v){this[k]=v;},replaceChildren(){this.children=[];},append(v){this.children.push(v);}});
+  if (!elements.has(id)) elements.set(id, {value:'0',hidden:false,classList:{add:noop,remove:noop},style:{setProperty:noop,removeProperty:noop},children:[],textContent:'',getContext:()=>context,setAttribute(k,v){this[k]=v;},replaceChildren(){this.children=[];},append(v){this.children.push(v);}});
   return elements.get(id);
 }
-const sandbox = {document:{getElementById:element,createElement:()=>({style:{setProperty:noop},getContext:()=>context,setAttribute(k,v){this[k]=v;}}),querySelectorAll:(q)=>q==='.hero-card'?element('roster').children:[],querySelector:()=>element('superLabel')},window:{},innerWidth:1440,innerHeight:900,devicePixelRatio:1,addEventListener:noop,requestAnimationFrame:noop,localStorage:{getItem:()=>null,setItem:noop},setInterval:noop,clearInterval:noop,console,Math};
+const sandbox = {document:{addEventListener:noop,getElementById:element,createElement:()=>({style:{setProperty:noop,removeProperty:noop},getContext:()=>context,setAttribute(k,v){this[k]=v;}}),querySelectorAll:(q)=>q==='.hero-card'?element('roster').children:[],querySelector:()=>element('superLabel')},window:{},innerWidth:1440,innerHeight:900,devicePixelRatio:1,addEventListener:noop,requestAnimationFrame:noop,localStorage:{getItem:()=>null,setItem:noop},setInterval:noop,clearInterval:noop,console,Math};
 
 let source=fs.readFileSync('game.js','utf8').replace('requestAnimationFrame(frame);\n})();', `globalThis.test={newRun,update,draw,spawn,damageEnemy,dash,beginWave,collectLoot,dropLoot,addHeat,home,pause,
  state:()=>({player,enemies,drops,gems,heat,furyTime,furyCount,peakCombo,waveEvent,mode}),

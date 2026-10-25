@@ -1,12 +1,32 @@
-# WILD BUNCH
+# KillMe2
+
+### Fluidità su mobile
+
+Gli sprite vengono rasterizzati una volta e riutilizzati, mantenendo la pixel art originale. L’HUD si aggiorna ogni 100 ms; movimento e combattimento continuano a ogni fotogramma. Sui dispositivi touch il canvas dei testi usa la risoluzione CSS, gli effetti sono limitati a 240 particelle, 32 anelli e 32 numeri di danno simultanei, e le finestre evitano la sfocatura dello sfondo. Nemici, proiettili, danni e ricompense restano invariati.
+
+`node tests/mobile-performance.cjs` verifica gli sprite pixel per pixel (anche specchiati), i limiti degli effetti e una scena con 260 nemici, 350 cristalli e 64 proiettili in Edge mobile emulato con CPU rallentata 4×. Un percorso sorgente opzionale permette un confronto con una versione precedente. I tempi sono misure sintetiche di aggiornamento/disegno, non FPS garantiti su un telefono reale.
 
 Arena roguelite con grafica arcade 8 bit: quattro eroi e nemici disegnati con sprite originali a pixel, tre arene a tessere (canyon, bosco dei funghi e forgia), proiettili e super colpi pixellati. Il Canvas lavora a un terzo della risoluzione e viene ingrandito senza interpolazione. Menu, HUD, selezione eroi e finestre usano bordi squadrati, colori netti e un carattere bitmap originale salvato localmente. Una leggera trama a righe richiama lo schermo del cabinato.
 
 Tre boss giganti alle ondate 4, 8 e 12: Gorath, Mycelia e Omega, con sprite distinti, barra della vita e attacchi più intensi sotto il 50% della vita. Le decorazioni delle arene non bloccano il movimento.
 
+## Campagna: Il cuore della Forgia
+
+Dal menu scegli **CAMPAGNA**: il primo capitolo, **Il segnale nella polvere**, contiene cinque missioni nel Canyon. Scegli liberamente Axiom, Vulkor, Bastion o Nyx sulla mappa. Ogni missione dura due ondate e riparte con vita e potenziamenti iniziali; completarla sblocca la successiva. Puoi rigiocare le missioni già superate. Sblocchi e prologo visto sono salvati localmente nel browser con la chiave `killme2-campaign-v1`.
+
+1. Imboscata nella polvere: sopravvivi e libera il passo.
+2. Le torri del silenzio: distruggi i tre ripetitori, bersagli fissi con segnale rosa.
+3. L’ultima scintilla: proteggi il generatore azzurro al centro dai predoni; se arriva a zero la missione fallisce.
+4. Memorie del convoglio: attraversa le tre memorie verdi per raccoglierle, poi libera la zona.
+5. Il re dei predoni: affronta Gorath nell’ultima ondata.
+
+Prologo e finale hanno quattro vignette illustrate originali in pixel art 8 bit, con palette desaturata e balloon leggibili, navigabili, saltabili e rileggibili dalla mappa. Ogni missione introduce nuovi dialoghi. Il finale prepara il Bosco dei Funghi: i capitoli successivi non sono ancora giocabili. **ARCADE** mantiene la partita originale da dodici ondate e tre boss.
+
+Verifica della campagna: `node tests/campaign.cjs` e `node tests/campaign-browser.cjs`.
+
 ## Gioca
 
-Fai doppio clic su **AVVIA WILD BUNCH.cmd** oppure **Play.cmd**. Il vecchio collegamento **AVVIA NEON REQUIEM.cmd** funziona ancora. Ogni apertura carica i file locali aggiornati, evitando la cache. Puoi anche aprire **index.html** in un browser moderno. Non occorre installare dipendenze. Il carattere Arcade Pixel è locale: la grafica non richiede connessione.
+Fai doppio clic su **AVVIA KillMe2.cmd** oppure **Play.cmd**. Il vecchio collegamento **AVVIA NEON REQUIEM.cmd** funziona ancora. Ogni apertura carica i file locali aggiornati, evitando la cache. Puoi anche aprire **index.html** in un browser moderno. Non occorre installare dipendenze. Il carattere Arcade Pixel è locale: la grafica non richiede connessione.
 
 Scegli uno dei quattro eroi nel menu. La selezione cambia aspetto, vita, velocità, arma iniziale e super colpo:
 
@@ -79,3 +99,5 @@ Nelle ondate ordinarie arrivano élite corazzate, riconoscibili dal cerchio dora
 Il riepilogo finale include la combo migliore e le Furie attivate. Tutti i nuovi bonus si azzerano a ogni partita e si fermano durante pausa e scelta dei potenziamenti.
 
 Verifiche: `node tests/fun.cjs` copre Furia, parate, bottini, élite, modificatori e reset; `node tests/fun-browser.cjs` verifica HUD, pausa e visualizzazione desktop/mobile in Edge.
+
+Le tavole della campagna sono salvate in `assets/comics/chapter-01-intro-8bit.png` e `assets/comics/chapter-01-ending-8bit.png`: atlanti 2×2, quattro scene ciascuno. Creati con ImageGen; prompt e vincoli cromatici sono in `assets/comics/PROMPTS.md`. Il lettore mostra una scena alla volta con campionamento senza interpolazione; i dialoghi restano testo HTML leggibile anche su mobile.
