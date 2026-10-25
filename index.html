@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>WILD BUNCH</title><link id="gameStyle" rel="stylesheet" href="style.css">
   <script>document.getElementById('gameStyle').href='style.css?v='+Date.now();</script>
 </head>
@@ -9,24 +9,28 @@
   <canvas id="game" aria-label="Arena di Wild Bunch"></canvas>
   <canvas id="gameText" aria-hidden="true"></canvas>
   <div id="vignette"></div>
-  <header><a class="wordmark" href=".">WB<span> / WILD BUNCH</span></a><div class="top-right"><span id="status">8-BIT ARCADE / HI-SCORE</span><button id="pauseButton" title="Pausa (Esc)" aria-label="Metti in pausa">Ⅱ</button><button id="muteButton" title="Audio" aria-label="Attiva o disattiva audio">♪ ON</button></div></header>
+  <div id="displayNotice" role="status" hidden></div>
+  <header><a class="wordmark" href="." aria-label="Wild Bunch, torna al menu">WB<span> / WILD BUNCH</span></a><div class="top-right" role="group" aria-label="Comandi di gioco"><span id="status">8-BIT ARCADE / HI-SCORE</span><button id="fullscreenButton" type="button" title="Schermo intero (F)" aria-label="Attiva schermo intero" aria-pressed="false"><span class="control-icon fullscreen-icon" aria-hidden="true"></span><span id="fullscreenLabel">SCHERMO INTERO</span></button><button id="pauseButton" type="button" title="Pausa (Esc)" aria-label="Metti in pausa" hidden><span class="control-icon pause-icon" aria-hidden="true"></span><span id="pauseLabel">PAUSA</span></button><button id="muteButton" type="button" title="Disattiva audio (M)" aria-label="Disattiva audio" aria-pressed="true"><span class="control-icon audio-icon" aria-hidden="true"></span><span id="audioLabel">AUDIO ON</span></button></div></header>
   <section id="menu" class="screen">
     <div class="eyebrow"><i></i> PIXEL POWER / ARCADE SURVIVAL</div>
     <h1>WILD<br><span>BUNCH</span><b>★</b></h1>
-    <p class="intro">Quattro eroi in pixel art. Dodici ondate di puro arcade.<br>Scegli il tuo combattente e conquista il record.</p>
+    <p class="intro">Caccia le élite. Afferra il bottino. Scatena la Furia.<br>Quattro eroi, dodici ondate e un record da polverizzare.</p>
     <div class="roster-label">SCEGLI IL TUO EROE <span>4 COMBATTENTI · 4 SUPER ARMI</span></div><div id="roster" role="group" aria-label="Scegli un personaggio"></div><p id="heroDetails" aria-live="polite"></p>
     <div class="config"><label>01 / DESTINAZIONE<select id="arenaSelect"><option value="0">Canyon dei predoni</option><option value="1">Bosco dei funghi</option><option value="2">Forgia abbandonata</option></select></label></div>
-    <button id="startButton" class="primary">ENTRA NELL’ARENA <span>↗</span></button>
-    <button id="creditsButton" class="secondary credits-button" aria-haspopup="dialog" aria-controls="creditsDialog">RICONOSCIMENTI</button>
-    <div class="controls"><span><kbd>W A S D</kbd> movimento</span><span><kbd>SPAZIO</kbd> scatto</span><span><kbd>E</kbd> super</span><span>tiro automatico</span></div>
+    <div class="menu-actions"><button id="startButton" class="primary">ENTRA NELL’ARENA <span aria-hidden="true">↗</span></button>
+    <button id="creditsButton" class="secondary credits-button" aria-haspopup="dialog" aria-controls="creditsDialog">RICONOSCIMENTI</button></div>
+    <div class="controls"><span><kbd>WASD / ↑↓←→</kbd> movimento</span><span><kbd>SPAZIO</kbd> scatto / para colpi</span><span><kbd>E</kbd> super</span><span><kbd>ESC</kbd> pausa</span><span><kbd>F</kbd> schermo intero</span><span><kbd>M</kbd> audio</span><span>tiro automatico</span></div>
+    <p class="touch-help">TOUCH: joystick a sinistra · Scatto e Super a destra.<br>Per una visuale più ampia, ruota il telefono.</p>
     <p class="music-credit" style="font-size:11px;opacity:.65">Mega Hyper Ultrastorm · Blown Away · Furious Freak · Club Diver — Kevin MacLeod (incompetech.com) · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color:inherit">CC BY 4.0</a></p><div class="best">RECORD LOCALE <strong id="best">000000</strong><span>12 ONDATE / 3 BOSS / NESSUNA SECONDA POSSIBILITÀ</span></div>
   </section>
   <section id="hud" hidden>
     <div class="hud-left"><div class="eyebrow" id="arenaName"></div><div class="health-label">INTEGRITÀ <strong id="healthText"></strong></div><div class="bar health"><i id="healthBar"></i></div><div class="health-label">LIVELLO <strong id="levelText">1</strong></div><div class="bar xp"><i id="xpBar"></i></div></div>
     <div class="wave-panel"><div id="waveText">ONDATA 01</div><strong id="timer">00:30</strong><small id="enemyCount"></small></div>
-    <div class="score-panel"><small>PUNTEGGIO</small><strong id="score">000000</strong><div id="combo"></div></div>
+    <div class="score-panel"><small>PUNTEGGIO</small><strong id="score">000000</strong><div id="combo"></div><div class="combo-track"><i id="comboFill"></i></div><div id="furyMeter"><span id="furyText">FURIA 0%</span><div class="fury-track"><i id="furyFill"></i></div><small id="furyHint">ELIMINA PER CARICARE</small></div></div>
+    <div class="event-panel"><strong id="eventName"></strong><span id="eventHint"></span></div>
     <div class="abilities"><button id="dashButton" type="button"><kbd>SPAZIO</kbd><span>SCATTO</span><strong id="dashText">PRONTO</strong></button><button id="novaButton" type="button"><kbd>E</kbd><span>SUPER COLPO</span><strong id="novaText">PRONTO</strong></button></div>
     <div id="bossHud" hidden><div class="boss-panel"><div id="bossName"></div><div class="boss-health"><i id="bossHealth"></i></div></div></div>
+    <div id="joystick" role="group" aria-label="Joystick touch: trascina per muoverti"><span id="joystickKnob"></span></div>
     <div id="announcement"></div><div class="bottom-note">WASD / FRECCE · MUOVITI &nbsp; | &nbsp; ESC · PAUSA</div>
   </section>
   <section id="overlay" class="modal-wrap" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="eyebrow" id="modalEyebrow"></div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div id="choices"></div><div id="rarityLegend" class="rarity-legend"></div><button id="continueButton" class="primary" hidden>CONTINUA ↗</button><button id="homeButton" class="secondary">TORNA AL MENU</button></div></section>
