@@ -283,7 +283,7 @@ header .top-right button{grid-area:auto;width:auto}
 #menu .hero-card[aria-pressed=true]:before{color:var(--hero-color);font-size:7px}
 #menu .config{margin:0 0 14px}
 #menu .config label{font:12px/1.5 system-ui,sans-serif;color:#bcbdd6}
-#menu .config label:after{content:'Solo per la modalità Arcade';display:block;font:11px/1.4 system-ui,sans-serif;color:#969dbb;margin-top:7px}
+#menu .config label:after{content:'Per Arcade e Boss infiniti';display:block;font:11px/1.4 system-ui,sans-serif;color:#969dbb;margin-top:7px}
 #menu select{font:14px system-ui,sans-serif;padding:11px 12px;margin-top:6px;border-color:#5f6590;background:#252e49}
 #menu .menu-actions{display:grid;grid-template-columns:1fr;gap:12px}
 #menu .menu-actions>button{display:flex;align-items:center;gap:16px;width:100%;min-width:0;min-height:76px;margin:0;padding:14px 18px;text-align:left;line-height:1.5;letter-spacing:0}
@@ -324,3 +324,91 @@ input:focus-visible{outline:3px solid var(--cyan);outline-offset:4px}
 @media(max-width:700px){#menu{margin:18px 16px;padding:20px 16px}#menu h1{font-size:44px}#roster{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#menu .hero-card canvas{height:72px}#menu .hero-card small{font-size:12px}.menu-heading .eyebrow{font-size:6px;letter-spacing:1px}#menu .roster-label{font-size:8px}#menu .menu-actions>button{padding:12px;gap:10px}#menu .mode-copy strong{font-size:11px}#menu .mode-copy small{font-size:12px}#menu .mode-icon{flex-basis:30px;font-size:20px}#menu .controls{gap:8px;font-size:10px}#menu kbd{font-size:7px}.menu-footer{gap:8px}#settingsButton{font-size:7px;padding:10px;gap:6px}#menu .best{font-size:6px}#settingsDialog{padding:18px}#settingsDialog .setting-row{grid-template-columns:1fr;gap:6px;margin-bottom:16px}.settings-heading{align-items:flex-start}#settingsDialog .settings-heading .secondary{font-size:7px;padding:8px}.settings-footer{align-items:stretch;flex-direction:column}.settings-footer p{max-width:none}}
 @media(prefers-reduced-motion:reduce){button{transition:none}}
 @media(min-width:851px) and (max-height:950px){#menu{padding:20px 28px}.menu-heading{padding-bottom:14px;margin-bottom:14px}#menu h1{font-size:54px;margin:10px 0}#menu .hero-card canvas{height:68px}#menu .menu-actions>button{min-height:68px;padding:10px 16px}#menu .mode-label{margin-top:20px}#menu .controls{margin-top:18px}.menu-footer{margin-top:14px;padding-top:14px}}
+
+/* Crisp presentation and a connected campaign trail. */
+.modal-wrap,#settingsDialog::backdrop{backdrop-filter:none}
+.route-sun{border-radius:50%;box-shadow:none}
+#campaignMap{max-width:1280px;margin:auto;background:#131c30}
+.canyon-route{padding:28px 20px 24px;background:linear-gradient(#352b50 0 38%,#8d5357 38% 40%,#54354b 40% 68%,#2c233b 68%)}
+#missionNodes{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;min-height:315px;align-items:start;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 315' preserveAspectRatio='none'%3E%3Cpath d='M100 50 L300 130 L500 50 L700 130 L900 50' fill='none' stroke='%23201930' stroke-width='14'/%3E%3Cpath d='M100 50 L300 130 L500 50 L700 130 L900 50' fill='none' stroke='%23e5b675' stroke-width='5' stroke-dasharray='8 8'/%3E%3C/svg%3E") center top/100% 315px no-repeat}
+#missionNodes:before{display:none}
+.mission-node,.mission-node:nth-child(even){display:flex;align-items:center;gap:12px;padding:8px 4px;min-height:0;margin:0;text-align:center;border:0;background:transparent;box-shadow:none;position:relative;color:#fff4dc}
+.mission-node:nth-child(even){margin-top:80px}
+.mission-node b{display:grid;place-items:center;flex-shrink:0;width:82px;height:82px;border-radius:50%;border:4px solid #b3bfd4;background:#26344d;box-shadow:0 6px #111426,inset 0 0 0 5px #131c30;color:#e6ebf5;font:24px var(--pixel)}
+.mission-node strong{font:10px/1.7 var(--pixel);max-width:180px;text-shadow:2px 2px #101426}
+.mission-node small{font:13px/1.5 system-ui,sans-serif;color:#e0d9d7;max-width:180px}
+.mission-node:disabled{opacity:1}.mission-node:disabled b{background:#302f3e;border-color:#767587;color:#aaa6b6}.mission-node:disabled small{color:#b3adbb}
+.mission-node.completed b{border-color:#66ffcf;color:#66ffcf;background:#204b49}
+.mission-node.current b{border-color:#fff1bd;background:#ffcd65;color:#172137;box-shadow:0 6px #9c603e,0 0 0 5px #ffcd6533,inset 0 0 0 5px #edb74b}
+.mission-node.current small{color:#ffdf94;font-weight:650}
+.mission-node:not(:disabled):hover{background:transparent;transform:translateY(-3px);filter:none;box-shadow:none}.mission-node:not(:disabled):hover b{border-color:white}
+.mission-node:focus-visible{outline:3px solid #72e3ed;outline-offset:3px;border-radius:12px}
+@media(max-width:850px){
+ .canyon-route{padding:20px 12px}
+ #missionNodes{display:flex;flex-direction:column;gap:0;background:none;min-height:0}
+ #missionNodes:before{display:block;top:36px;bottom:84px;left:35px;right:auto;border:0;border-left:4px dashed #e5b675}
+ .mission-node,.mission-node:nth-child(even){display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-rows:auto auto;column-gap:16px;row-gap:5px;width:100%;text-align:left;margin:0;padding:10px 0 20px;align-items:center}
+ .mission-node b{width:72px;height:72px;grid-row:1/3;font-size:20px}
+ .mission-node strong,.mission-node small{max-width:none;grid-column:2}
+ .mission-node strong{align-self:end;font-size:10px}.mission-node small{align-self:start;font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){.mission-node:not(:disabled):hover{transform:none}}
+.mission-node strong{font-size:14px;line-height:1.6}
+@media(max-width:850px){.mission-node strong{font-size:12px}}
+
+/* The arena scrolls under a compact, screen-space interface. */
+body.in-game header{top:max(10px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));height:44px;padding:0}
+body.in-game .hud-left{top:76px;width:200px}
+body.in-game .wave-panel{top:18px}
+body.in-game .score-panel{top:76px}
+body.in-game #arenaName{max-width:240px;font:11px/1.4 system-ui,sans-serif}
+body.in-game #missionObjective{bottom:auto;top:230px;max-width:280px;font:14px/1.4 system-ui,sans-serif}
+body.in-game .event-panel{bottom:14px}
+@media(max-width:360px){body.in-game #pauseLabel{display:none}}
+@media(pointer:coarse),(any-pointer:coarse),(max-width:700px){
+ body.in-game .hud-left{left:max(14px,env(safe-area-inset-left));top:66px;width:42%;max-width:190px}
+ body.in-game #arenaName{display:none}
+ body.in-game .health-label{font:11px/1.3 system-ui,sans-serif;margin-top:6px}
+ body.in-game .bar{height:10px;margin-top:4px;padding:1px}
+ body.in-game .wave-panel{left:auto;right:max(14px,env(safe-area-inset-right));top:66px;transform:none;width:42%;max-width:180px;padding:6px 8px}
+ body.in-game .wave-panel>div{font:11px/1.4 system-ui,sans-serif}
+ body.in-game .wave-panel strong{font-size:22px;line-height:1.45}
+ body.in-game .wave-panel small{font:10px/1.3 system-ui,sans-serif}
+ body.in-game .score-panel{top:max(12px,env(safe-area-inset-top));left:14px;right:auto;text-align:left;width:120px}
+ body.in-game .score-panel>small{display:none}
+ body.in-game .score-panel>strong{font-size:18px;line-height:1.3}
+ body.in-game #combo{font:11px/1.4 system-ui,sans-serif;margin:0}
+ body.in-game .combo-track{display:none}
+ body.in-game #furyMeter{padding:3px 0;margin:0;border:0;background:none;box-shadow:none}
+ body.in-game #furyText{font:10px/1.3 system-ui,sans-serif}
+ body.in-game .fury-track{height:4px;margin-top:3px}
+ body.in-game #missionObjective{left:14px;top:168px;max-width:calc(100% - 28px);padding:7px 10px;font-size:12px;background:#101426d9}
+ body.in-game #bossHud{top:225px;bottom:auto;left:14px;right:14px}
+ body.in-game .boss-panel{padding:6px;width:min(360px,100%)}
+ body.in-game #bossName{font-size:10px;margin-bottom:5px}
+ body.in-game .event-panel{display:none}
+ body.in-game #announcement{top:38%;font-size:18px;line-height:1.7}
+ body.in-game .abilities{width:124px;right:max(14px,env(safe-area-inset-right));bottom:calc(22px + env(safe-area-inset-bottom));gap:10px}
+ body.in-game .abilities>button{min-width:0;min-height:66px;padding:10px 8px 12px 40px;border-radius:12px;grid-template-columns:1fr;gap:4px}
+ body.in-game .abilities .ability-icon{width:24px;height:24px;left:9px}
+ body.in-game .abilities span{font:11px/1.25 system-ui,sans-serif}
+ body.in-game .abilities strong{font:12px/1.3 system-ui,sans-serif}
+ body.in-game .abilities kbd{display:none}
+ body.in-game #joystick{width:112px;height:112px;left:max(18px,env(safe-area-inset-left));bottom:calc(24px + env(safe-area-inset-bottom))}
+ body.in-game .top-right{display:flex;gap:7px}
+ body.in-game .top-right button{font:11px system-ui,sans-serif;padding:8px;min-height:44px;min-width:44px}
+}
+@media(max-height:500px) and (min-width:600px){
+ body.in-game .hud-left{top:max(12px,env(safe-area-inset-top));width:180px}
+ body.in-game .wave-panel{top:max(10px,env(safe-area-inset-top));left:50%;right:auto;transform:translateX(-50%);width:170px}
+ body.in-game .score-panel{top:66px;left:auto;right:16px;width:132px;text-align:right}
+ body.in-game #missionObjective{top:96px;left:max(14px,env(safe-area-inset-left));max-width:220px;font-size:12px}
+ body.in-game #bossHud{top:91px;left:32%;right:32%}
+ body.in-game #bossName{font:11px system-ui,sans-serif}
+ body.in-game .abilities{flex-direction:row;width:240px;bottom:calc(16px + env(safe-area-inset-bottom))}
+ body.in-game .abilities>button{flex:1;min-height:64px}
+ body.in-game #joystick{width:100px;height:100px;bottom:calc(16px + env(safe-area-inset-bottom))}
+ body.in-game #announcement{font-size:16px;top:40%}
+}
+
+#menu .menu-actions>#bossButton{background:linear-gradient(115deg,#75334b,#442e58);border:2px solid #ffa1b5;color:#fff0dc;box-shadow:0 4px #28172f}

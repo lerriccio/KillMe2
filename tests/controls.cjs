@@ -24,9 +24,11 @@ const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-run
   assert.equal((await state()).hero,2,'Space selects hero in menu');
   await page.locator('#arenaSelect').focus();await page.keyboard.press('ArrowDown');
   assert.equal(await page.locator('#arenaSelect').inputValue(),'1');
+  await page.locator('#settingsButton').click();
   await page.locator('#creditsButton').focus();await page.keyboard.press('Space');
   assert.equal(await page.locator('#creditsDialog').evaluate(e=>e.open),true);
   await page.keyboard.press('Escape');assert.equal(await page.evaluate(()=>document.activeElement.id),'creditsButton');
+  await page.locator('#closeSettingsButton').click();
   await page.keyboard.press('KeyM');assert.equal((await state()).audio,false);
   assert.equal(await page.locator('#muteButton').getAttribute('aria-pressed'),'false');
   await page.keyboard.press('KeyM');assert.equal((await state()).audio,true);
@@ -36,7 +38,7 @@ const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-run
   await page.locator('#startButton').focus();await page.keyboard.press('Space');
   assert.equal((await state()).mode,'play','Space starts game');
   assert.equal((await state()).dash,0,'start does not fire dash');
-  await page.locator('.wordmark').click();assert.equal((await state()).mode,'menu','logo returns to menu without reloading');
+  await page.keyboard.press('Escape');await page.locator('#homeButton').click();assert.equal((await state()).mode,'menu','pause returns to menu without reloading');
   await page.locator('#startButton').click();
   await page.locator('#pauseButton').focus();await page.keyboard.press('Space');
   assert.equal((await state()).mode,'play','combat Space does not click focused pause button');
@@ -66,6 +68,7 @@ const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-run
    await page.locator('#homeButton').click();
   }
   await page.setViewportSize({width:320,height:568});
+  await page.locator('#settingsButton').click();
   await page.locator('#fullscreenButton').click();await page.waitForFunction(()=>!!document.fullscreenElement);
   await fits('header button');await page.keyboard.press('KeyF');
   assert.deepEqual(errors,[]);

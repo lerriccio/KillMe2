@@ -12,8 +12,8 @@ const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-run
    const page=await context.newPage(),errors=[];
    page.on('pageerror',e=>errors.push(String(e)));
    const source=fs.readFileSync(file,'utf8').replace('requestAnimationFrame(frame);\n})();',`window.perfQA={
-    setup(){music.enabled=false;newRun();stopMusic();enemies=[];spawnTimer=eliteTimer=shootTimer=1000;player.inv=1000;player.magnet=0;
-     for(let i=0;i<260;i++){spawn(['normal','runner','tank','shooter'][i%4]);const e=enemies[i];e.x=25+i*37%340;e.y=140+i*53%620;e.speed=0;e.cd=1000;e.hp=e.maxHp=1e9;}
+    setup(){music.enabled=false;newRun();stopMusic();enemies=[];spawnTimer=eliteTimer=shootTimer=1000;player.inv=1000;player.magnet=0;player.x=195;player.y=420;followCamera(1);
+     for(let i=0;i<360;i++){spawn(['normal','runner','tank','shooter'][i%4]);const e=enemies[i];e.x=25+i*37%340;e.y=140+i*53%620;e.speed=0;e.cd=1000;e.hp=e.maxHp=1e9;}
      gems=Array.from({length:350},(_,i)=>({x:20+i*23%350,y:130+i*41%650,value:1,age:0}));
      for(let i=0;i<64;i++)bullets.push({x:25+i*37%340,y:140+i*53%620,vx:0,vy:0,life:1000,pierce:1000,hit:new Set(),kind:'gunslinger'});
      burst(195,420,'#ffcd65',1100);for(let i=0;i<50;i++)ring(195,420,'#ffcd65');
@@ -43,7 +43,7 @@ const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-run
    if(file==='game.js'){
     assert.ok(metrics.fillsPerFrame<6000,'sprite rendering stays bounded under crowd load');
     assert.ok(metrics.particles<=240&&metrics.rings<=32,'touch effects stay bounded');
-    assert.equal(metrics.textWidth,390,'touch text canvas avoids DPR 3 overdraw');
+    assert.equal(metrics.textWidth,585,'touch text stays sharp at capped DPR 1.5');
     await page.screenshot({path:'tests/performance-mobile.png'});
    }
    assert.deepEqual(errors,[]);results.push({file,...metrics});await context.close();

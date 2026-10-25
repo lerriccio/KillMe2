@@ -1,5 +1,11 @@
 # KillMe2
 
+### Animazioni dei personaggi
+
+Tutti e quattro gli eroi hanno 10 sequenze di sprite pixel art: attesa (6 fotogrammi), movimento (8), attacco (6), scatto (6), super (10), danno (4), comparsa e rinascita (8), cura (6), potenziamento (8) e Furia (8). Sono 70 fotogrammi per eroe, 280 complessivi, costruiti dai disegni originali e memorizzati nella cache come immagini senza interpolazione. Gambe alternate, cingoli di Bastion e mantello di Nyx hanno movimenti dedicati; rinculo, ascia e chakram seguono i fotogrammi dell’attacco e mantengono la mira automatica. Anche il personaggio grande nel menu respira e batte le palpebre.
+
+Le animazioni si fermano in pausa e durante la scelta dei potenziamenti. Scatto e super hanno precedenza sugli attacchi automatici; le sequenze tornano al movimento o all’attesa al termine. `node tests/animations.cjs` verifica fotogrammi e transizioni per tutti gli eroi e salva un’anteprima in `tests/animation-sequences.png`.
+
 ### Fluidità su mobile
 
 Gli sprite vengono rasterizzati una volta e riutilizzati, mantenendo la pixel art originale. L’HUD si aggiorna ogni 100 ms; movimento e combattimento continuano a ogni fotogramma. Sui dispositivi touch il canvas dei testi usa la risoluzione CSS, gli effetti sono limitati a 240 particelle, 32 anelli e 32 numeri di danno simultanei, e le finestre evitano la sfocatura dello sfondo. Nemici, proiettili, danni e ricompense restano invariati.
@@ -101,3 +107,31 @@ Il riepilogo finale include la combo migliore e le Furie attivate. Tutti i nuovi
 Verifiche: `node tests/fun.cjs` copre Furia, parate, bottini, élite, modificatori e reset; `node tests/fun-browser.cjs` verifica HUD, pausa e visualizzazione desktop/mobile in Edge.
 
 Le tavole della campagna sono salvate in `assets/comics/chapter-01-intro-8bit.png` e `assets/comics/chapter-01-ending-8bit.png`: atlanti 2×2, quattro scene ciascuno. Creati con ImageGen; prompt e vincoli cromatici sono in `assets/comics/PROMPTS.md`. Il lettore mostra una scena alla volta con campionamento senza interpolazione; i dialoghi restano testo HTML leggibile anche su mobile.
+
+### Revisione grafica e combattimento (25 ottobre 2026)
+
+Arena e testi ora vengono renderizzati alla risoluzione del display, con DPR massimo 2 su desktop e 1,5 su touch. Questa impostazione sostituisce il precedente rendering dell'arena a un terzo della risoluzione e quello dei testi touch a DPR 1. Rimangono sprite pixel art senza interpolazione, cache e limiti degli effetti. I quattro eroi e i quattro tipi di nemici hanno nuove sagome; i ritratti usano canvas più grandi e le vignette la risoluzione originale. Rimossa la sfocatura dei pannelli; le righe CRT sono disattivate per le nuove preferenze, restando selezionabili nelle impostazioni.
+
+La campagna usa bollini circolari collegati, percorso a zigzag su desktop e verticale su telefono, con missione corrente dorata e missioni completate verdi. Le missioni e i salvataggi esistenti restano compatibili.
+
+Ogni 10 eliminazioni consecutive riducono di 1 secondo la ricarica della super e di 0,5 secondi quella dello scatto. A fine ondata i tiratori avanzano invece di arretrare. Aggiunti lampi delle armi e suoni sintetici per ascia, danni, parate e cambi ondata; completato il ripiego audio per razzi, esplosioni, lame e boss. Tutti rispettano volume e mute.
+
+Corretti i danni a distanza involontari nella difesa del generatore, la respinta diagonale dell'ascia, i colpi veloci che saltavano i bersagli e il superamento della destinazione dei cristalli attratti. Test di regressione: `node tests/refresh.cjs`. I test di simulazione includono ora anche il DOM delle impostazioni.
+
+### Mappa scorrevole e assalti
+
+Il mondo misura 2800 × 2200 unità, indipendentemente dal display. La telecamera segue l’eroe con scorrimento morbido su PC e telefono; ruotare il telefono mantiene le coordinate del personaggio e degli obiettivi. L’interfaccia touch ha pannelli compatti, testi leggibili, comandi separati e margini per le aree sicure del telefono. Una freccia indica l’obiettivo più vicino fuori dalla visuale.
+
+I boss, le ondate 10–12 dell’Arcade e le ultime ondate delle missioni inviano gruppi da 8–12 nemici con intervalli ridotti, fino a 360 nemici contemporanei. I boss arrivano con 32 predoni e chiamano altri rinforzi ogni tre attacchi, raddoppiandoli quasi sotto metà vita. I nemici fuori dalla visuale continuano a muoversi, mentre i loro sprite non vengono disegnati.
+
+La prima missione richiede tre segnali da decifrare restando nei cerchi per tre secondi ciascuno. I ripetitori distrutti scatenano imboscate e lasciano cure; le memorie richiedono 1,5 secondi di download, rivelano dialoghi e attirano predoni. Il generatore si ripara quando l’eroe è vicino e la zona è libera, con assalti periodici. Dopo le ondate e gli obiettivi bisogna raggiungere il faro verde di estrazione sotto un ultimo attacco. I progressi del capitolo restano compatibili.
+
+Verifiche: `node tests/campaign.cjs`, `node tests/scrolling-arena.cjs`, `node tests/mobile.cjs`.
+
+### Boss infiniti
+
+Il pulsante **BOSS INFINITI** avvia una partita senza ultima ondata: Gorath, Mycelia e Omega si alternano, esattamente un boss per ondata. Ogni ondata aumenta la vita e i danni del boss; velocità, cadenza e velocità dei proiettili crescono gradualmente. Il menu e la barra del boss mostrano modalità e potenza corrente. Riprova ricomincia nella stessa modalità.
+
+Gli assalti partono con 90 rinforzi e gruppi da 18–26 nemici, fino a 700 presenze contemporanee. I boss chiamano altri 30 rinforzi ogni tre attacchi, 48 in furia. Scaduto il tempo cessano tutti i rinforzi: elimina boss e superstiti per continuare, recuperare 12 punti vita e ricaricare lo scatto. Anche le prime ondate ordinarie hanno gruppi più numerosi (da 5 a 10).
+
+Verifica: `node tests/boss-mode.cjs` copre boss unico, progressione oltre la dodicesima ondata, crescita fino all’ondata 100, limite dell’orda, fine rinforzi, HUD e riprova.

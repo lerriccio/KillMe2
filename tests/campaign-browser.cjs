@@ -23,7 +23,7 @@ const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-run
    await page.evaluate(()=>campaignQA.win());await page.locator('#continueButton').click();
   }
   await page.locator('#comicLoadStatus').waitFor({state:'hidden'});
-  assert.equal(await page.locator('#comicArt').evaluate(c=>c.width===384&&c.height===256),true,'ending artwork was decoded and painted');
+  assert.equal(await page.locator('#comicArt').evaluate(c=>c.width>=384&&c.height>=256),true,'ending artwork was decoded and painted');
   await page.locator('#comicNext').click();await page.locator('#comicLoadStatus').waitFor({state:'hidden'});await page.screenshot({path:'tests/campaign-ending.png'});
   await page.locator('#comicSkip').click();assert.equal(await page.locator('#replayEnding').isVisible(),true);
   await page.reload();await page.locator('#campaignButton').click();assert.equal(await page.locator('.mission-node:enabled').count(),5,'completed missions persist after reload');
