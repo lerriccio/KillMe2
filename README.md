@@ -1,5 +1,25 @@
 # KillMe2
 
+## Preparazione Android e miglioramenti del 26 ottobre 2026
+
+Il sottotitolo dello store è **Forge Survivors**; il gioco conserva il nome KillMe2. La campagna ora comprende **dieci missioni in due capitoli**, Canyon e Bosco dei Funghi. Il secondo introduce spore con avviso prima del danno, la scorta di un drone che aspetta quando sei lontano o ci sono predoni, e lo scontro con Mycelia. Dopo il primo finale si sblocca la missione 6; dopo la missione 10 una conclusione testuale chiude l’arco dei quattro nuclei. Le illustrazioni del primo capitolo restano quelle originali.
+
+Il menu propone un addestramento giocabile di cinque passi, la ripresa della partita e le maestrie degli eroi. L’addestramento avviene senza orde e non assegna ricompense né sovrascrive la partita sospesa. Le partite si salvano ogni cinque secondi di gioco, in pausa, tornando al menu e quando la pagina viene nascosta. Il ripristino conserva nemici, proiettili e relativi bersagli già colpiti, obiettivi, gradi, carte da scegliere e sequenza casuale; riprende in pausa. In caso di terminazione improvvisa possono andare persi gli ultimi cinque secondi. I salvataggi sono locali, senza sincronizzazione automatica fra dispositivi. Esporta/importa un JSON dalle impostazioni per creare un backup o trasferirli.
+
+La scelta dei poteri mantiene il combattimento attivo e il supporto multitouch. Il timer automatico è **disattivato per impostazione predefinita**; nelle impostazioni puoi attivarlo oppure fermare il combattimento durante la lettura delle carte. Sono regolabili lato, dimensione e altezza dei comandi, con joystick fisso o mobile. I boss mostrano traiettorie anticipate coerenti con la prossima raffica e fissano la direzione di mira prima del colpo. Il riepilogo spiega la causa dell’ultimo danno.
+
+Ogni eroe ha maestria da 1 a 20, XP da tempo giocato, eliminazioni, boss e vittorie. Aspetti: Cobalto al grado 3, Brace dopo 5 boss, Prisma con combo 50. Le varianti dell’arma si sbloccano ai gradi 2 e 4: Pesante (+25% danni e intervallo fra attacchi), Rapida (−20% danni e intervallo). Hanno compromessi, senza acquisti o incrementi permanenti obbligatori delle statistiche. La sfida del giorno usa data UTC, eroe/arena e seme iniziale condivisi; riprovarla riparte dallo stesso seme. I risultati sono solo locali e le varianti dell’arma sono disattivate nella sfida. Il seme di gioco è distinto dalla casualità di effetti e audio.
+
+Italiano e inglese si selezionano nelle impostazioni, includendo interfaccia, carte, storia, testi su canvas e principali etichette di accessibilità. `release.js` gestisce profilo e salvataggi; `i18n.js` gestisce le traduzioni senza servizi esterni. La versione non contiene pubblicità, acquisti, account o telemetria.
+
+Il progetto Android in `android/` usa API 36, minimo Android 8, una WebView con origine HTTPS locale e soli asset inclusi; non richiede permessi Internet o accesso generale ai file. Include tasto Indietro, gestione delle interruzioni e selettore documenti per i backup. La licenza SDK è stata accettata su autorizzazione del titolare e sono stati compilati APK debug e bundle release; il bundle richiede ancora la firma di upload. Restano necessarie le prove su telefoni reali. Vedi `android/README.md`.
+
+Materiali dello store in `store/`: descrizioni IT/EN, icona, feature graphic, sei schermate reali di gameplay e un video WebM senza audio. `privacy.html` contiene il contatto temporaneo autorizzato `leoriccio@gmail.com`, da verificare e sostituire prima della pubblicazione su Google Play. `store/RELEASE-CHECKLIST.md` distingue i preparativi da firma, account, classificazione, test chiuso e pubblicazione da completare in Play Console. Il push su GitHub aggiorna la versione browser e i sorgenti; non carica l’app su Google Play.
+
+Verifiche: `node tools/verify.cjs` (simulazioni), `node tools/verify.cjs --browser` (Edge/Playwright). I nuovi test coprono anche secondo capitolo, tutorial completo, ripresa, ricompense senza duplicazione, traduzioni, timer facoltativo e import/export con rifiuto dei file corrotti. Le misure di prestazioni in browser emulato non garantiscono FPS, consumi o stabilità su un telefono Android.
+
+Le sezioni successive descrivono anche versioni precedenti: in caso di differenze valgono le impostazioni e i contenuti riepilogati qui.
+
 ### Animazioni dei personaggi
 
 Tutti e quattro gli eroi hanno 10 sequenze di sprite pixel art: attesa (6 fotogrammi), movimento (8), attacco (6), scatto (6), super (10), danno (4), comparsa e rinascita (8), cura (6), potenziamento (8) e Furia (8). Sono 70 fotogrammi per eroe, 280 complessivi, costruiti dai disegni originali e memorizzati nella cache come immagini senza interpolazione. Gambe alternate, cingoli di Bastion e mantello di Nyx hanno movimenti dedicati; rinculo, ascia e chakram seguono i fotogrammi dell’attacco e mantengono la mira automatica. Anche il personaggio grande nel menu respira e batte le palpebre.
@@ -44,7 +64,8 @@ Scegli uno dei quattro eroi nel menu. La selezione cambia aspetto, vita, velocit
 | Nyx, spettro del vuoto | Chakram Eclisse: lame rotanti a rimbalzo | Eclisse delle anime: 32 lame potenziate con cinque rimbalzi |
 
 - WASD o frecce: movimento; mira e attacco automatici. Le raffiche mantengono un colpo sulla linea di mira anche con 4 proiettili e usano un cono stretto.
-- I nemici arrivano in gruppi da 3 a 6, con frequenza crescente e un massimo di 260 presenze ordinarie contemporanee.
+- I nemici arrivano in gruppi da 12 a 28 (da 24 a 36 nelle ondate di assalto), con frequenza crescente e un massimo di 600 presenze ordinarie contemporanee. Boss infiniti arriva a 1000 nemici, con gruppi da 36 a 48.
+- Vita iniziale: Axiom 40, Vulkor 70, Bastion 55, Nyx 35. Dopo un colpo la protezione dura 0,45 secondi (0,4 per i proiettili); tra le ondate Arcade recuperi 6 punti vita.
 - Spazio: scatto offensivo e breve invulnerabilità, ricarica 2,6 secondi.
 - E: super colpo del personaggio, ricarica 12 secondi; elimina anche i proiettili ostili vicini.
 - Esc: pausa, attiva anche quando la finestra perde il focus.

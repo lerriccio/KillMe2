@@ -51,8 +51,9 @@ const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-run
   await page.keyboard.down('KeyD');await page.keyboard.press('Escape');await page.keyboard.up('KeyD');
   await page.locator('#pauseButton').click();assert.deepEqual((await state()).keys,{});
   await page.evaluate(()=>controlsQA.upgrade());
-  assert.equal(await page.locator('#pauseButton').isDisabled(),true);
-  assert.equal(await page.evaluate(()=>document.activeElement.classList.contains('upgrade')),true);
+  assert.equal(await page.locator('#pauseButton').isDisabled(),false,'non-blocking rewards keep pause available');
+  assert.equal(await page.locator('#upgradePanel').isVisible(),true);
+  await page.keyboard.press('Digit1');
   await page.keyboard.press('Space');assert.equal((await state()).mode,'play');
   await page.evaluate(()=>controlsQA.end());await page.keyboard.press('Space');
   assert.equal((await state()).mode,'play','keyboard retry starts a fresh game');

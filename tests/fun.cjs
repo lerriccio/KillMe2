@@ -26,7 +26,7 @@ assert.equal(t.state().furyTime,7);assert.equal(t.state().furyCount,1);assert.eq
 t.spawn('tank');let e=t.state().enemies.at(-1);e.hp=e.maxHp=1000;t.damageEnemy(e,10);assert.equal(e.hp,985,'fury increases damage 50%');
 t.quiet();t.pause();assert.equal(t.state().furyTime,7);t.pause();t.update(.25);assert.equal(t.state().furyTime,6.75);
 t.newRun();t.quiet();p=t.state().player;t.shot();t.dash();t.update(.01);assert.equal(t.hostile().length,0,'dash destroys projectiles');assert.equal(t.state().heat,2);
-t.newRun();t.quiet();p=t.state().player;p.hp=20;t.dropLoot(p.x,p.y,'heal');t.update(.01);assert.equal(p.hp,45);assert.equal(t.state().drops.length,0);
+t.newRun();t.quiet();p=t.state().player;p.hp=20;t.dropLoot(p.x,p.y,'heal');t.update(.01);assert.equal(p.hp,Math.min(p.maxHp,20+p.maxHp*.25));assert.equal(t.state().drops.length,0);
 t.gem();t.collectLoot({x:p.x,y:p.y,kind:'magnet'});assert.equal(t.state().gems[0].x,p.x);
 p.novaCd=10;p.dashCd=2;t.collectLoot({x:p.x,y:p.y,kind:'overdrive'});assert.equal(p.novaCd,5);assert.equal(p.dashCd,0);assert.equal(t.state().heat,40);
 t.dropLoot(5,5,'heal');t.state().drops[0].life=.001;t.update(.01);assert.equal(t.state().drops.length,0,'loot expires');

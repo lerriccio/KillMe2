@@ -12,16 +12,18 @@
   <div id="displayNotice" role="status" hidden></div>
   <header><div class="top-right" role="group" aria-label="Comandi di gioco"><button id="pauseButton" type="button" title="Pausa (Esc)" aria-label="Metti in pausa" hidden><span class="control-icon pause-icon" aria-hidden="true"></span><span id="pauseLabel">PAUSA</span></button><button id="quickSettingsButton" type="button" aria-haspopup="dialog" aria-controls="settingsDialog" hidden>IMPOSTAZIONI</button></div></header>
   <section id="menu" class="screen">
-    <div class="menu-heading"><div class="eyebrow">QUATTRO EROI. UNA SOLA ARENA.</div><h1>KILL<span>ME2</span><b>★</b></h1><p>Scegli il tuo eroe. Lascia il segno.</p></div>
+    <div class="menu-heading"><div class="eyebrow">FORGE SURVIVORS · QUATTRO EROI. UNA SOLA ARENA.</div><h1>KILL<span>ME2</span><b>★</b></h1><p>Scegli il tuo eroe. Lascia il segno.</p></div>
+    <div class="returning-actions"><button id="resumeRunButton" class="primary" hidden>CONTINUA PARTITA</button><button id="tutorialButton" class="secondary">INIZIA QUI · ADDESTRAMENTO</button><p class="save-help">Una nuova partita sostituisce quella sospesa. Tornare al menu conserva la partita.</p><p id="saveStatus" role="status"></p></div>
     <div class="roster-label"><span class="step-number">01</span> SCEGLI IL TUO EROE</div><div id="roster" role="group" aria-label="Scegli un personaggio"></div>
     <div class="roster-label mode-label"><span class="step-number">02</span> SCEGLI COME GIOCARE</div>
     <div class="config"><label>ARENA<select id="arenaSelect"><option value="0">Canyon dei predoni</option><option value="1">Bosco dei funghi</option><option value="2">Forgia abbandonata</option></select></label></div>
     <div class="menu-actions"><button id="campaignButton" class="primary"><span class="mode-icon" aria-hidden="true">01</span><span class="mode-copy"><strong>CAMPAGNA</strong><small>Il cuore della Forgia</small></span><span class="mode-arrow" aria-hidden="true">→</span></button><button id="startButton" class="secondary"><span class="mode-icon" aria-hidden="true">∞</span><span class="mode-copy"><strong>ARCADE</strong><small>Resisti. Combatti. Supera il record.</small></span><span class="mode-arrow" aria-hidden="true">→</span></button><button id="bossButton" class="secondary"><span class="mode-icon" aria-hidden="true">☠</span><span class="mode-copy"><strong>BOSS INFINITI</strong><small>Un boss per ondata. Sempre più forte. Orde immense.</small></span><span class="mode-arrow" aria-hidden="true">→</span></button></div>
     <div class="controls"><span><kbd>WASD / ↑↓←→</kbd> movimento</span><span><kbd>SPAZIO</kbd> scatto</span><span><kbd>E</kbd> super</span></div>
+    <div class="daily-card"><button id="dailyButton" class="secondary"><strong id="dailyLabel">SFIDA DEL GIORNO</strong></button><p id="dailyResult"></p><button id="masteryButton" class="secondary">MAESTRIE E ASPETTI</button></div>
     <div class="menu-footer"><div class="best">RECORD ARCADE <strong id="best">000000</strong></div><button id="settingsButton" class="secondary" aria-haspopup="dialog" aria-controls="settingsDialog"><span aria-hidden="true">⚙</span> IMPOSTAZIONI</button></div>
   </section>
   <section id="campaignMap" class="campaign-screen" hidden aria-labelledby="campaignTitle">
-    <div class="eyebrow">IL CUORE DELLA FORGIA / CAPITOLO 01</div>
+    <div class="eyebrow">IL CUORE DELLA FORGIA / CAPITOLI 01–02</div>
     <h2 id="campaignTitle">IL SEGNALE NELLA POLVERE</h2>
     <p class="campaign-intro">Quattro sconosciuti. Un segnale impossibile. Una strada verso la Forgia.</p>
     <div id="campaignHeroes" role="group" aria-label="Scegli l’eroe per la missione"></div>
@@ -50,7 +52,7 @@
   </section>
   <section id="upgradePanel" aria-labelledby="upgradeTitle" hidden>
     <div class="upgrade-heading"><h2 id="upgradeTitle">SCEGLI POTERE</h2><span id="upgradeCountdown"></span></div>
-    <p>Premi 1, 2 o 3 · Alla scadenza: opzione 1</p>
+    <p id="upgradeHelp">Premi 1, 2 o 3 · Scegli quando vuoi</p>
     <div id="upgradeChoices"></div>
   </section>
   <section id="overlay" class="modal-wrap" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="eyebrow" id="modalEyebrow"></div><h2 id="modalTitle"></h2><p id="modalDescription"></p><div id="choices"></div><button id="continueButton" class="primary" hidden>CONTINUA ↗</button><button id="homeButton" class="secondary">TORNA AL MENU</button></div></section>
@@ -67,7 +69,16 @@
       <label class="setting-check"><input id="scanlines" type="checkbox" checked><span>Filtro retro a righe</span></label>
       <button id="fullscreenButton" type="button" class="secondary" title="Schermo intero (F)" aria-label="Attiva schermo intero" aria-pressed="false"><span class="control-icon fullscreen-icon" aria-hidden="true"></span><span id="fullscreenLabel">SCHERMO INTERO</span></button>
     </section>
-    <section class="settings-section"><h3>COMANDI</h3><p>WASD / frecce: movimento · Spazio: scatto · E: super<br>Esc: pausa · M: audio · F: schermo intero<br>Su touch: trascina a sinistra per muoverti e usa i tasti abilità.</p></section>
+    <section class="settings-section"><h3>COMANDI</h3><p>WASD / frecce: movimento · Spazio: scatto · E: super<br>Esc: pausa · M: audio · F: schermo intero<br>Su touch: trascina sul lato del joystick e usa i tasti abilità.</p>
+      <label class="setting-row"><span>Joystick</span><select id="joystickMode"><option value="floating">Mobile</option><option value="fixed">Fisso</option></select></label>
+      <label class="setting-row"><span>Lato del joystick</span><select id="touchSide"><option value="left">Sinistra</option><option value="right">Destra</option></select></label>
+      <label class="setting-row"><span>Dimensione comandi</span><input id="touchScale" type="range" min="85" max="125" step="5" value="100"></label>
+      <label class="setting-row"><span>Altezza comandi</span><input id="touchOffset" type="range" min="0" max="70" step="5" value="0"></label>
+      <label class="setting-check"><input id="upgradeTimer" type="checkbox"><span>Scelta automatica dopo 10 secondi</span></label>
+      <label class="setting-check"><input id="pauseUpgrades" type="checkbox"><span>Ferma il combattimento mentre scegli i poteri</span></label>
+      <label class="setting-row"><span>Lingua / Language</span><select id="languageSelect"><option value="it">Italiano</option><option value="en">English</option></select></label>
+    </section>
+    <section class="settings-section"><h3>SALVATAGGI E PRIVACY</h3><p>I progressi restano su questo dispositivo. Esporta una copia prima di disinstallare.</p><div class="progress-actions"><button id="exportProgress" class="secondary">ESPORTA PROGRESSI</button><label class="file-button">IMPORTA PROGRESSI<input id="importProgress" type="file" accept="application/json,.json"></label><button id="privacyButton" class="secondary">PRIVACY</button><button id="deleteProgress" class="secondary">ELIMINA PROGRESSI</button></div><div id="importConfirm" hidden><p>Sostituire i progressi attuali con quelli del file?</p><button id="confirmImport">IMPORTA E SOSTITUISCI</button><button id="cancelImport">ANNULLA</button></div><div id="deleteConfirm" hidden><p>Eliminare record, maestrie, campagna e partita salvata? Questa operazione non si può annullare.</p><button id="confirmDelete">ELIMINA DEFINITIVAMENTE</button><button id="cancelDelete">ANNULLA</button></div></section>
     <div class="settings-footer"><p>Le preferenze vengono salvate su questo browser.</p><button id="creditsButton" class="secondary" aria-haspopup="dialog" aria-controls="creditsDialog">RICONOSCIMENTI →</button></div>
   </dialog>
   <dialog id="creditsDialog" aria-labelledby="creditsTitle">
@@ -86,5 +97,9 @@
     <section><h3>Grafica e caratteri</h3><p>Grafica e animazioni pixel art disegnate nel codice del gioco. Vignette originali della campagna create con assistenza di ImageGen. Font locale Arcade Pixel, generato per il progetto e distribuito in CC0.</p></section>
     <p class="credits-thanks">Grazie a chi gioca a KillMe2.</p>
   </dialog>
+  <aside id="tutorialPanel" hidden role="status"><strong>ADDESTRAMENTO / TRAINING</strong><p id="tutorialText"></p><button id="skipTutorial" class="secondary">TORNA AL MENU</button></aside>
+  <dialog id="masteryDialog" aria-labelledby="masteryTitle"><h2 id="masteryTitle">MAESTRIE E ASPETTI</h2><p>Gioca per ottenere XP. Gli aspetti sono solo estetici: nessun vantaggio acquistabile.</p><div id="masteryCards"></div><button id="closeMastery" class="secondary">CHIUDI</button></dialog>
+  <dialog id="privacyDialog" aria-labelledby="privacyTitle"><h2 id="privacyTitle">PRIVACY</h2><p>KillMe2 conserva sul dispositivo preferenze, record, campagna, maestrie e la partita in corso. Questa versione non contiene account, pubblicità, acquisti, analisi di utilizzo o invio di dati ai nostri server.</p><p>Puoi esportare una copia dei progressi o eliminarli dalle impostazioni. Disinstallare l’app può cancellare i salvataggi. I collegamenti ai crediti aprono siti esterni, soggetti alle rispettive informative.</p><p>La sfida giornaliera usa la data UTC e una sequenza deterministica, con record locali. Non esiste una classifica online.</p><button id="closePrivacy" class="secondary">CHIUDI</button></dialog>
+  <script src="i18n.js"></script><script src="release.js"></script>
   <script>const gameScript=document.createElement('script');gameScript.src='game.js?v='+Date.now();document.body.appendChild(gameScript);</script>
 </body></html>

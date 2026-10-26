@@ -5,7 +5,7 @@ const assert=require('node:assert/strict');
 const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 const root=path.resolve(__dirname,'..');
 const source=fs.readFileSync(path.join(root,'game.js'),'utf8').replace('requestAnimationFrame(frame);\n})();',`globalThis.upgradeQA={
- show(){pendingUpgrades=1;player.ranks.core=1;rollUpgrades=()=>[upgrades.find(u=>u.id==='core'),upgrades.find(u=>u.id==='cryo'),upgrades.find(u=>u.id==='chain')];chooseUpgrade();},
+ show(){preferences.upgradeTimer=true;pendingUpgrades=1;player.ranks.core=1;rollUpgrades=()=>[upgrades.find(u=>u.id==='core'),upgrades.find(u=>u.id==='cryo'),upgrades.find(u=>u.id==='chain')];chooseUpgrade();},
  state:()=>({ranks:player.ranks,mode,runTime,x:player.x,remaining:activeUpgrade?.remaining,pending:pendingUpgrades}),tick:dt=>tickUpgrade(dt),queue:()=>pendingUpgrades++,safe:()=>{player.inv=1000;}
 };requestAnimationFrame(frame);\n})();`);
 const server=http.createServer((req,res)=>{const url=new URL(req.url,'http://localhost');const file=path.resolve(root,'.'+decodeURIComponent(url.pathname==='/'?'/index.html':url.pathname));if(!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}if(!fs.existsSync(file)){res.writeHead(404).end();return;}res.setHeader('Content-Type',file.endsWith('.js')?'application/javascript':file.endsWith('.css')?'text/css':file.endsWith('.ogg')?'audio/ogg':file.endsWith('.html')?'text/html':'application/octet-stream');res.end(file===path.join(root,'game.js')?source:fs.readFileSync(file));});

@@ -19,7 +19,7 @@ quiet(){enemies=[];},
 vm.runInNewContext(source,sandbox);const q=sandbox.qa;
 element('bossButton').onclick();assert.equal(q.state().bossMode,true);
 q.update(.016);assert.equal(q.state().enemies.filter(e=>e.type==='boss').length,1);
-assert.ok(q.state().enemies.length>=109,'large opening horde');
+assert.ok(q.state().enemies.length>=197,'large opening horde');
 const first=q.state().enemies.find(e=>e.type==='boss');q.damageEnemy(first,first.hp);q.update(.016);
 assert.equal(q.state().enemies.filter(e=>e.type==='boss').length,0,'no second boss after early kill');
 let previous;
@@ -30,8 +30,8 @@ for(const wave of [1,2,3,4,12,13,40,100]){
  previous={hp:b.hp,damageScale:b.damageScale,speed:b.speed,cd:b.cd};q.draw();q.updateHud();assert.ok(element('waveText').textContent.includes('∞'));assert.ok(element('bossName').textContent.includes('POTENZA '+wave));
 }
 q.stage(12,0);q.clear();q.update(.016);assert.equal(q.state().wave,13);assert.equal(q.state().mode,'play');q.update(.016);assert.equal(q.state().enemies.filter(e=>e.type==='boss').length,1);
-q.stage(30);for(let i=0;i<600;i++)q.update(.016);assert.equal(q.state().enemies.length,700,'horde reaches bounded cap');assert.equal(q.state().enemies.filter(e=>e.type==='boss').length,1);
+q.stage(30);for(let i=0;i<600;i++)q.update(.016);assert.equal(q.state().enemies.length,1000,'horde reaches bounded cap');assert.equal(q.state().enemies.filter(e=>e.type==='boss').length,1);
 q.stage(4,0);q.update(.016);const b=q.state().enemies.find(e=>e.type==='boss');q.quiet();for(let i=0;i<9;i++)q.bossAttack(b,0);assert.equal(q.state().enemies.length,0,'reinforcements stop during cleanup');
 q.newRun();assert.equal(q.state().bossMode,true,'retry preserves boss mode');assert.equal(q.state().wave,1);
 q.home();element('startButton').onclick();assert.equal(q.state().bossMode,false);q.stage(12,0);q.update(.016);q.clear();q.update(.016);assert.equal(q.state().mode,'end','Arcade still ends');
-console.log('PASS: one boss per wave, infinite progression beyond 12, scaling stats and attacks, 700 enemies, cleanup, HUD, retry and Arcade isolation.');
+console.log('PASS: one boss per wave, infinite progression beyond 12, scaling stats and attacks, 1000 enemies, cleanup, HUD, retry and Arcade isolation.');

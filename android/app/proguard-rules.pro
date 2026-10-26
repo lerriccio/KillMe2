@@ -1,0 +1,1 @@
+-keepclassmembers class it.lerriccio.killme2.MainActivity$ExportBridge { @android.webkit.JavascriptInterface <methods>; }

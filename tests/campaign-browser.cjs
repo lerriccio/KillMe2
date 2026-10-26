@@ -26,7 +26,7 @@ const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-run
   assert.equal(await page.locator('#comicArt').evaluate(c=>c.width>=384&&c.height>=256),true,'ending artwork was decoded and painted');
   await page.locator('#comicNext').click();await page.locator('#comicLoadStatus').waitFor({state:'hidden'});await page.screenshot({path:'tests/campaign-ending.png'});
   await page.locator('#comicSkip').click();assert.equal(await page.locator('#replayEnding').isVisible(),true);
-  await page.reload();await page.locator('#campaignButton').click();assert.equal(await page.locator('.mission-node:enabled').count(),5,'completed missions persist after reload');
+  await page.reload();await page.locator('#campaignButton').click();assert.equal(await page.locator('.mission-node:enabled').count(),6,'completed missions and the next chapter persist after reload');
   for(const size of [{width:390,height:844},{width:320,height:740},{width:844,height:390}]){
    await page.setViewportSize(size);await page.locator('#replayIntro').click();
    const bounds=await page.locator('#comicScreen').boundingBox();assert.ok(bounds.y>=60&&bounds.x>=0&&bounds.x+bounds.width<=size.width);

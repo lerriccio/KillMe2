@@ -1,0 +1,41 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'it.lerriccio.killme2'
+    compileSdk 36
+    buildFeatures { buildConfig true }
+    defaultConfig {
+        applicationId 'it.lerriccio.killme2'
+        minSdk 26
+        targetSdk 36
+        versionCode 1
+        versionName '1.0.0'
+    }
+    signingConfigs {
+        if (System.getenv('KILLME2_KEYSTORE')) {
+            release {
+                storeFile file(System.getenv('KILLME2_KEYSTORE'))
+                storePassword System.getenv('KILLME2_STORE_PASSWORD')
+                keyAlias System.getenv('KILLME2_KEY_ALIAS')
+                keyPassword System.getenv('KILLME2_KEY_PASSWORD')
+            }
+        }
+    }
+    buildTypes {
+        debug { applicationIdSuffix '.debug'; versionNameSuffix '-debug' }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (System.getenv('KILLME2_KEYSTORE')) signingConfig signingConfigs.release
+        }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+
+// Reproducible allowlist: preview tracks, tests and development files never enter the app.
+tasks.register('syncGameAssets', Exec) {
+    workingDir rootProject.projectDir.parentFile
+    commandLine 'node', 'tools/package-android.cjs'
+}
+tasks.named('preBuild').configure { dependsOn 'syncGameAssets' }

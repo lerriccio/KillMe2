@@ -435,3 +435,42 @@ body.in-game .event-panel{bottom:14px}
 }
 
 #menu .menu-actions>#bossButton{background:linear-gradient(115deg,#75334b,#442e58);border:2px solid #ffa1b5;color:#fff0dc;box-shadow:0 4px #28172f}
+
+/* Release features use the same readable arcade panels as the existing menu. */
+.returning-actions,.daily-card{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:14px 0}.returning-actions>button,.daily-card>button{max-width:100%;white-space:normal}.save-help,#saveStatus,.daily-card p{width:100%;font:13px/1.5 system-ui,sans-serif;color:#d6e0ef;margin:0}.daily-card{border-top:1px solid #66728d;padding-top:14px}.daily-card p{order:3}#dailyLabel{font:12px/1.6 system-ui,sans-serif}.progress-actions{display:flex;flex-wrap:wrap;gap:10px}.file-button{display:flex;align-items:center;position:relative;min-height:44px;padding:12px;border:2px solid #66728d;font:12px system-ui,sans-serif;cursor:pointer}.file-button input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}#masteryDialog,#privacyDialog{width:min(760px,calc(100vw - 24px));max-height:90dvh;overflow:auto;background:#151f35;color:#fff0dc;border:2px solid #72e3ed;padding:22px}#masteryDialog p,#privacyDialog p{font:15px/1.6 system-ui,sans-serif}#masteryCards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}.mastery-card{border:1px solid #64728f;padding:14px;min-width:0}.mastery-card h3{font:14px/1.5 system-ui,sans-serif;color:#ffcd65}.mastery-card select{width:100%;font:14px system-ui,sans-serif}#tutorialPanel{position:fixed;z-index:6;top:185px;left:50%;transform:translateX(-50%);width:min(490px,calc(100vw - 28px));background:#111b30f5;border:2px solid #72e3ed;padding:14px;box-shadow:4px 4px #080c16}#tutorialPanel strong{font:13px system-ui,sans-serif;color:#72e3ed}#tutorialPanel p{font:15px/1.5 system-ui,sans-serif}#tutorialPanel button{font:12px system-ui,sans-serif;min-height:44px}body.reading-upgrade #upgradePanel{z-index:5;border-color:#72e3ed}body.reading-upgrade #upgradeHelp{color:#72e3ed}
+@media(max-width:500px){#masteryCards{grid-template-columns:1fr}.returning-actions>button,.daily-card>button{width:100%}#tutorialPanel{top:185px;padding:10px}#tutorialPanel p{font-size:13px}}
+@media(max-height:500px){#tutorialPanel{top:112px;width:42%;left:50%;padding:8px}#tutorialPanel p{font-size:12px;margin:5px 0}#tutorialPanel button{padding:5px}}
+@media(pointer:coarse),(any-pointer:coarse),(max-width:700px){
+ body.in-game #joystick{width:calc(112px * var(--touch-scale,1));height:calc(112px * var(--touch-scale,1));bottom:calc(24px + env(safe-area-inset-bottom) + var(--touch-offset,0px))}
+ body.in-game .abilities{width:calc(124px * var(--touch-scale,1));bottom:calc(22px + env(safe-area-inset-bottom) + var(--touch-offset,0px))}
+ body.in-game .abilities>button{min-height:calc(66px * var(--touch-scale,1))}
+ body.in-game #upgradePanel{bottom:calc(180px + env(safe-area-inset-bottom) + var(--touch-offset,0px));right:max(12px,env(safe-area-inset-right));width:min(360px,calc(100vw - 24px));max-height:calc(100dvh - 360px - var(--touch-offset,0px));min-height:110px}
+ body.touch-right #joystick{left:auto;right:max(18px,env(safe-area-inset-right))}body.touch-right .abilities{right:auto;left:max(14px,env(safe-area-inset-left))}
+}
+@media(max-height:500px) and (min-width:600px){
+ body.in-game .abilities{width:calc(216px * var(--touch-scale,1));bottom:calc(12px + env(safe-area-inset-bottom) + var(--touch-offset,0px))}
+ body.in-game #joystick{width:calc(100px * var(--touch-scale,1));height:calc(100px * var(--touch-scale,1))}
+ body.in-game #upgradePanel{width:min(300px,calc(100vw - 430px));right:calc(20px + 216px * var(--touch-scale,1));bottom:12px;max-height:calc(100dvh - 110px);min-height:0}
+ body.touch-right #upgradePanel{right:auto;left:calc(20px + 216px * var(--touch-scale,1))}
+}
+
+/* Keep rewards beside the abilities and outside the resting movement area. */
+@media(pointer:coarse),(any-pointer:coarse),(max-width:700px){
+ body.in-game #upgradePanel{right:calc(max(14px,env(safe-area-inset-right)) + 136px);bottom:calc(148px + env(safe-area-inset-bottom));width:calc(100vw - max(14px,env(safe-area-inset-right)) - 148px);max-width:360px;max-height:calc(100dvh - 220px);padding:8px}
+ #upgradePanel .upgrade{touch-action:pan-y;user-select:none;-webkit-user-select:none;min-height:48px}
+ #upgradePanel .card-top{display:none}
+ #upgradePanel .upgrade b{grid-column:2/4;font:600 12px/1.3 system-ui,sans-serif}
+ #upgradePanel .upgrade small{font:11px/1.3 system-ui,sans-serif}
+ #upgradeTitle{font:600 12px/1.3 system-ui,sans-serif}
+ #upgradePanel>p{font:10px/1.3 system-ui,sans-serif}
+}
+
+/* Final adjustable layout: leave both control areas clear at every supported size. */
+.mission-node.forest:not(.current) b{border-color:#9ccebe;background:#183e43}.mission-node.forest.completed b{border-color:#66ffcf;color:#66ffcf}#missionNodes{row-gap:30px;background-repeat:repeat-y}
+@media(pointer:coarse),(any-pointer:coarse),(max-width:700px){
+ body.in-game #upgradePanel{left:auto;right:max(12px,env(safe-area-inset-right));bottom:calc(132px * var(--touch-scale,1) + 52px + env(safe-area-inset-bottom) + var(--touch-offset,0px));width:min(360px,calc(100vw - 24px));max-height:calc(100dvh - 132px * var(--touch-scale,1) - 262px - var(--touch-offset,0px));min-height:100px}
+}
+@media(max-height:500px) and (min-width:600px){
+ body.in-game #upgradePanel{left:auto;right:calc(24px + 216px * var(--touch-scale,1));width:calc(100vw - 316px * var(--touch-scale,1) - 64px);max-width:360px;bottom:12px;max-height:calc(100dvh - 110px);min-height:0}
+ body.touch-right #upgradePanel{right:auto;left:calc(24px + 216px * var(--touch-scale,1))}
+}

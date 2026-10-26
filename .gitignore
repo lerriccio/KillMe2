@@ -8,3 +8,14 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+tests/recovery-release/
+android/.gradle/
+android/local.properties
+android/app/build/
+android/build/
+android/app/src/main/assets/game/
+android/*.jks
+android/keystore.properties
+release-build/
+.tools/

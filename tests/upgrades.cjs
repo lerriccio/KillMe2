@@ -56,11 +56,11 @@ for(let hero=0;hero<4;hero++){
 t.selectHero(0);t.newRun();t.clear();let p=t.state().player;
 t.spawn('tank');t.place(p.x+150,p.y);let target=t.state().enemies.at(-1);target.hp=target.maxHp=1000;
 t.spawn('tank');t.place(p.x+180,p.y);let secondary=t.state().enemies.at(-1);secondary.hp=secondary.maxHp=1000;
-ability('chain').apply(p);ability('cryo').apply(p);ability('leech').apply(p);p.hp=50;
-t.weaponHit(target,100);assert.equal(secondary.hp,1000-p.damage*.65);assert.equal(target.slow,.18);assert.equal(p.hp,53);
-t.newRun();t.clear();p=t.state().player;ability('aura').apply(p);ability('regen').apply(p);p.hp=50;
+ability('chain').apply(p);ability('cryo').apply(p);ability('leech').apply(p);p.hp=20;
+t.weaponHit(target,100);assert.equal(secondary.hp,1000-p.damage*.65);assert.equal(target.slow,.18);assert.equal(p.hp,23);
+t.newRun();t.clear();p=t.state().player;ability('aura').apply(p);ability('regen').apply(p);p.hp=20;
 t.spawn('tank');t.place(p.x+150,p.y);target=t.state().enemies.at(-1);target.hp=target.maxHp=1000;
-t.update(.1);assert.ok(target.hp<1000);assert.ok(p.hp>50);
+t.update(.1);assert.ok(target.hp<1000);assert.ok(p.hp>20);
 t.newRun();t.clear();p=t.state().player;ability('phoenix').apply(p);t.kill();t.update(.01);assert.equal(p.hp,p.maxHp);assert.equal(p.revives,0);assert.equal(p.inv,3);assert.equal(t.state().mode,'play');
 t.kill();t.update(.01);assert.equal(t.state().mode,'end');
 t.newRun();t.clear();p=t.state().player;ability('execute').apply(p);t.spawn('tank');target=t.state().enemies.at(-1);target.maxHp=1000;target.hp=160;t.weaponHit(target,20);assert.ok(target.hp<=0);

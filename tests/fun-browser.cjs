@@ -19,7 +19,7 @@ const {chromium}=require('C:/Users/leori/.cache/codex-runtimes/codex-primary-run
    await page.setViewportSize(viewport);await page.screenshot({path:'tests/fury-'+viewport.width+'.png'});
    assert.ok(await page.locator('#furyMeter').evaluate(e=>{const b=e.getBoundingClientRect();return b.left>=0&&b.right<=innerWidth;}));
   }
-  await page.evaluate(()=>funTest.expire());await page.waitForTimeout(50);assert.equal(await page.locator('#furyMeter').getAttribute('data-active'),'false');
+  await page.evaluate(()=>funTest.expire());await page.waitForFunction(()=>document.getElementById('furyMeter').getAttribute('data-active')==='false');
   assert.deepEqual(errors,[]);console.log('PASS: fury/event HUD, frozen fury during pause, desktop/portrait/landscape rendering, fury expiration and no browser errors.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1);});
